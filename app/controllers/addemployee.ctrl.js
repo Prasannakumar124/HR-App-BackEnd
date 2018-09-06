@@ -1,9 +1,10 @@
 require('../models/db.connection')
  const mongoose = require('mongoose');
  const add = mongoose.model('Addemployee');
+ const SeparatedEmp=mongoose.model('SeparatedEmp');
  const objectId = require('mongodb').ObjectId;
 
- //       ----------------------Inserting Employee Data-----------------
+ //----------------------ADD Employee Data-----------------
 
                       module.exports.addingemployee=(req,res)=>{
                       var data=new add(req.body)
@@ -20,7 +21,7 @@ require('../models/db.connection')
                       })
                       }
 
-//               -------------Update Employee---------------------
+//-------------Update Employee---------------------
 
                         module.exports.updateEmployee= (req, res) => {
                       var EmpNo = req.params.empno;
@@ -33,11 +34,11 @@ require('../models/db.connection')
                       })    
                       }
 
-//            ---------------Employee Details----------------
+//            --------------- Employee Details----------------
 
                       module.exports.QuickEmployeeinfo= (req, res) => {
                         add
-                        .find({},
+                        .find({"CompanyStatus": "active"},
                           {
                             "Name":1,
                             "_id":0,
@@ -52,7 +53,7 @@ require('../models/db.connection')
                           },
                           function (err,resp){
                             if (err) {res.json(err)}
-                          res.status(200)
+                          res.status(200) 
                           .json(resp)
                         })
                       };
@@ -70,6 +71,7 @@ module.exports.Extendprohibationperiod=(req,res) =>{
   })
   };
 
+  // update Bank details
 module.exports.updateEmployeeBankdetails=(req,res) =>{
   var EmpNo = req.params.empno;
   add
@@ -80,18 +82,28 @@ module.exports.updateEmployeeBankdetails=(req,res) =>{
   })
   };
 
-//---------------------------Get One employye data-------------------------------------
+//---------------------------Get One employee Details-------------------------------------
 
 module.exports.getspecifiedemp=(req,res)=>{
   console.log(req.params.empno)
   let empNumber= req.params.empno;
   add
   .find({"EmployeeNo":empNumber},function (err,doc){
-    res
-    .status(200)
-    .json(doc);})
-};
-//-------------------------Get All Employee Data-------------------------------------
+    if(err){
+      res.json(err)
+      return res;
+    }
+    // res
+    // .status(200)
+    // .json(doc)
+    
+    if(doc[0].EmployeeNo===empNumber){
+     SeparatedEmp.findById(doc[0].ResignationDetails._id,function(error,result){
+        res.json(result)
+      })}
+     })
+    }
+//-------------------------Get All Employee Details-------------------------------------
 
 module.exports.getAllemployees = (req, res) =>{
                 add
@@ -102,3 +114,20 @@ module.exports.getAllemployees = (req, res) =>{
                   .json(doc)
                 })
               }
+
+//---------------------Conformation-------------------------
+module.exports.confirmemp=(req,res)=>{
+  var EmpNo = req.params.empno;
+  add
+  .find({"EmployeeNo":EmpNo},function (err,doc){
+   if(doc[0].Status!="confirmed"){
+     add.findOneAndUpdate({"EmployeeNo":EmpNo},{$set:{"Status":"confirmed"}}, function(err,data){
+      if (err) { throw err; }
+      else { res.json({"Message":"Employee confirmed"}) }
+     })
+   }else{
+     res.json({"Message":"Employee is already confirmed"})
+   }
+
+  })}
+  

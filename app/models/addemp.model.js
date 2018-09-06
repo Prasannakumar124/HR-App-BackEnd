@@ -7,6 +7,23 @@ const mongoose = require('mongoose');
 		institute:String,
 		remarks:String
 	});
+	var SeparatedEmployee=mongoose.Schema(
+		{
+			"EmployeeNo": String,
+			"ResignationSubmittedOn":String,
+			"ReasonForLeaving":{type:String,required: true},
+			"NoticePeriod":Number,
+			"TentativeLeavingDate":String,
+			 "Remarks" :String,
+			//Exit details
+			"InterviewDate":String,
+			"Notes":String,
+			"LeavingDate":String,
+			"SettledOn":String,
+			  "Employee has left organization":Boolean,
+			 "Notice Served":Boolean,
+			 "Fit to be rehired":Boolean
+			 });
 	var Address=mongoose.Schema(
 	{
 		Name:String,
@@ -22,14 +39,7 @@ const mongoose = require('mongoose');
 		Mobile:Number,
 		Email:String
 	});
-	var separateemployee=mongoose.Schema(
-{
-	"Resignation Submitted On":String,
-	"Reason For Leaving":{type:String,require:true},
-	"Notice Period":Number,
-	"Tentative Leaving Date":String,
-	Remarks:String 
-});
+	
 	var backgroundcheck=mongoose.Schema(
 	{
 		VerificationStatus:String,
@@ -46,6 +56,7 @@ const mongoose = require('mongoose');
 	var  basicinfoSchema=mongoose.Schema(
 	{
 		//basic info
+		//_id:String,
 		EmployeeNumberSeries:{type:String,require:true},
 		EmployeeNo:{type:String,require:true},
 		Name:{type:String,require:true},
@@ -53,6 +64,7 @@ const mongoose = require('mongoose');
 		Gender:{type:String,require:true},
 		ReportingManager:String,
 		Status:String,
+		CompanyStatus:String,
 		DateOfJoining:{type:String,require:true},
 		ProbationPeriod:Number,
 		//Extend probition period
@@ -120,6 +132,7 @@ const mongoose = require('mongoose');
 		Emergency:Address,
 		"BACKGROUND CHECK":backgroundcheck,
 		"REMARKS":remarks,
-		"Employee Separation":separateemployee	
+		ResignationDetails:SeparatedEmployee
+			
 	});
 mongoose.model("Addemployee",basicinfoSchema,"employeedetails")

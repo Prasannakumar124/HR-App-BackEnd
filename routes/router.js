@@ -2,43 +2,89 @@ const express = require('express');
 const path = require('path');
 const router = express.Router();
 const addemplyctrl=require('../app/controllers/addemployee.ctrl');
+const SeparatedEmplist=require('../app/controllers/SeparatedEmplist.ctrl')
+const AddHolidays=require('../app/controllers/AddHolidays.ctrl')
 
-//             ************addemployee.ctrl.js************
+
+             /* ************addemployee.ctrl.js*********** */
+
+//----------------ADD Employee -----------------------------
+
+        router
+        .route('/basicinfo')
+        .post(addemplyctrl.addingemployee)
+
+        //------------get employee Deyails-------------------------------------
+        router
+        .route('/basicinfo/:empno')
+        .get(addemplyctrl.getspecifiedemp)
+        router
+        .route('/getAllemployees')
+        .get(addemplyctrl.getAllemployees)
+
+        //------------------update employee Deatils----------------------------
+        router
+        .route('/basicinfo/:empno')
+        .patch(addemplyctrl.updateEmployee)
+
+        //------ ------------Employee Details ----------------------
+        router
+        .route('/employeedetails')
+        .get(addemplyctrl.QuickEmployeeinfo)
+
+        //------- Update employee Bank Details-----------------
+        router
+        .route('/updateEmployeeBankdetails/:empno')
+        .patch(addemplyctrl.updateEmployeeBankdetails)
+
+        //------- Update employee Prohibation Period-----------------
+        router
+        .route('/updateprohibationperiod/:empno')
+        .put(addemplyctrl.Extendprohibationperiod)
+
+        //---------------- confirm Employee
+        router
+            .route('/confirmemp/:empno')
+            .put(addemplyctrl.confirmemp)
 
 
-//----------------ADD NEW Employee DATA-----------------------------
+            /*             ************SeparatedEmplist.ctrl.js*********** */
 
-router
-.route('/basicinfo')
-.post(addemplyctrl.addingemployee)
+        //----------------empseperation
+            router
+            .route('/Empseperation/:empno')
+            .post(SeparatedEmplist.Empseperation)
 
-//------------get employee data-------------------------------------
-router
-.route('/basicinfo/:empno')
-.get(addemplyctrl.getspecifiedemp)
-router
-.route('/getAllemployees')
-.get(addemplyctrl.getAllemployees)
+        //-------------Deleted Employee list 
+        router
+        .route('/DeletedEmployeeList/:empno')
+        .post(SeparatedEmplist.DeletedEmployeeDetails)
 
-//------------------update employee Data----------------------------
-router
-.route('/basicinfo/:empno')
-.patch(addemplyctrl.updateEmployee)
+        //-------UpdatesResignationDetails
+        router
+        .route('/UpdatesResignationDetails/:empno')
+        .patch(SeparatedEmplist.UpdateResignationDetails)
 
-//------ ------------Employee Details ----------------------
-router
-.route('/employeedetails')
-.get(addemplyctrl.QuickEmployeeinfo)
 
-//------- Update employee Bank Details-----------------
-router
-.route('/updateEmployeeBankdetails/:empno')
-.patch(addemplyctrl.updateEmployeeBankdetails)
+            /*             ************AddHolidays.ctrl.js************/
 
-//------- Update employee Prohibation Period-----------------
-router
-.route('/updateprohibationperiod/:empno')
-.put(addemplyctrl.Extendprohibationperiod)
+        //------------adding Details
+        router
+        .route('/AddHoliday')
+        .post(AddHolidays.AddingHolidays)
 
+        //------------modifying Holiday Details
+        router
+        .route('/modifyingholiday/:id')
+        .patch(AddHolidays.modifyingHoliday)
+
+        //-------------Get Holiday List
+        router
+        .route('/holidaylist')
+        .get(AddHolidays.HolidayList)
+
+
+
+    
 module.exports = router
       

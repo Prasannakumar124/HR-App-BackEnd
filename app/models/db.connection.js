@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 const CONFIG = require('../config');
 require('./addemp.model');
+require('./seperated.model');
+require('./AddHolidays.model')
+
 
 const option={
   user:CONFIG.USER,
