@@ -4,7 +4,7 @@ const router = express.Router();
 const addemplyctrl=require('../app/controllers/addemployee.ctrl');
 const SeparatedEmplist=require('../app/controllers/SeparatedEmplist.ctrl')
 const AddHolidays=require('../app/controllers/AddHolidays.ctrl')
-
+const Leave=require('../app/controllers/Leave.ctrl')
 
              /* ************addemployee.ctrl.js*********** */
 
@@ -82,6 +82,35 @@ const AddHolidays=require('../app/controllers/AddHolidays.ctrl')
         router
         .route('/holidaylist')
         .get(AddHolidays.HolidayList)
+
+        //-----------Delete Holiday
+        router
+        .route('/DeleteHoliday/:id')
+        .get(AddHolidays.DeletHoliday)
+
+        /*             ************Leave.ctrl.js************/
+        
+        //-------------Requesting A Leave
+        router
+        .route('/RequestLeave')
+        .post(Leave.RequestLeave)
+
+        //-------Granting A Leave
+        router
+        .route('/grantleave/:id')
+        .patch(Leave.modifyingLeave)
+
+        //------- View Leave History
+
+        router
+        .route('/Leavelist')
+        .get(Leave.LeaveList)
+
+        //----------Delete Leave
+        router
+        .route('/DeleteLeave/:id')
+        .get(Leave.DeleteLeave)
+
 
 
 

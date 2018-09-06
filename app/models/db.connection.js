@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 const CONFIG = require('../config');
 require('./addemp.model');
 require('./seperated.model');
-require('./AddHolidays.model')
+require('./AddHolidays.model');
+require('./Leave.model');
 
 
 const option={

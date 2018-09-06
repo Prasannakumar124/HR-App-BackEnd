@@ -1,7 +1,5 @@
 require('../models/db.connection')
  const mongoose = require('mongoose');
- const add = mongoose.model('Addemployee');
- const SeparatedEmp=mongoose.model('SeparatedEmp');
  const Holiday=mongoose.model('Holidays');
  const objectId = require('mongodb').ObjectId;
 
@@ -48,3 +46,18 @@ module.exports.HolidayList = (req, res) =>{
       .json(doc)
     })
   }
+
+//-------- Delete Holiday
+
+module.exports.DeletHoliday= (req, res) => {
+  let holidayId = req.params.id;
+Holiday
+.findOneAndRemove(holidayId,(err, resp) => {
+    if (err) {
+      console.log("Error : ", err.stack);
+    }
+    res
+    .status(200)
+    .json({"status":"Remove sucessfully"})
+  }
+)}
