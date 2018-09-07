@@ -3,6 +3,8 @@ require('../models/db.connection')
  const add = mongoose.model('Addemployee');
  const SeparatedEmp=mongoose.model('SeparatedEmp');
  const objectId = require('mongodb').ObjectId;
+ var multer  = require('multer');
+ var imgPath = multer({ dest:'../models/addemp.model.js/ProfileImg' })
 
  //----------------------ADD Employee Data-----------------
 
@@ -21,6 +23,18 @@ require('../models/db.connection')
                       })
                       }
 
+//------------------------upload image
+module.exports.UploadImage=(req,res)=>{
+  add.find({})
+var photo = new add;
+    photo.profileImg.data = fs.readFileSync(imgPath);
+    photo.profileImg.contentType = 'image/png/jpeg/jpg';
+    photo.save(function (err, a) {
+      if (err) throw err;
+      res
+      .json({"Status":"saved img to mongo"})
+    })
+    }
 //-------------Update Employee---------------------
 
                         module.exports.updateEmployee= (req, res) => {
@@ -93,14 +107,14 @@ module.exports.getspecifiedemp=(req,res)=>{
       res.json(err)
       return res;
     }
-    // res
-    // .status(200)
-    // .json(doc)
+    res
+    .status(200)
+    .json(doc)
     
-    if(doc[0].EmployeeNo===empNumber){
-     SeparatedEmp.findById(doc[0].ResignationDetails._id,function(error,result){
-        res.json(result)
-      })}
+    // if(doc[0].EmployeeNo===empNumber){
+    //  SeparatedEmp.findById(doc[0].ResignationDetails._id,function(error,result){
+    //     res.json(result)
+    //  })}
      })
     }
 //-------------------------Get All Employee Details-------------------------------------

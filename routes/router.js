@@ -5,6 +5,7 @@ const addemplyctrl=require('../app/controllers/addemployee.ctrl');
 const SeparatedEmplist=require('../app/controllers/SeparatedEmplist.ctrl')
 const AddHolidays=require('../app/controllers/AddHolidays.ctrl')
 const Leave=require('../app/controllers/Leave.ctrl')
+var multer  = require('multer')
 
              /* ************addemployee.ctrl.js*********** */
 
@@ -27,6 +28,13 @@ const Leave=require('../app/controllers/Leave.ctrl')
         .route('/basicinfo/:empno')
         .patch(addemplyctrl.updateEmployee)
 
+        //--------------------UploadImage---------------------------------------
+
+        router
+        .route('/UploadImage')
+        .post(addemplyctrl.UploadImage)
+
+        
         //------ ------------Employee Details ----------------------
         router
         .route('/employeedetails')

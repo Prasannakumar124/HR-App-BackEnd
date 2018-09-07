@@ -6,6 +6,12 @@ const bodyParser = require('body-parser');
 var app=express();
 app.set('port',7000);
 app.set('host','127.0.0.1');
+//middleware function to display routes
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept,x-access-token");
+  next();
+});
 app.use(function (req, res, next) {
   console.log(req.method, req.url);
   next();

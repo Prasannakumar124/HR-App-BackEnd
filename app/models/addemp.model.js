@@ -58,6 +58,7 @@ const mongoose = require('mongoose');
 		//basic info
 		//_id:String,
 		EmployeeNumberSeries:{type:String,require:true},
+		ProfileImg:{ data: Buffer, contentType: String },
 		EmployeeNo:{type:String,require:true},
 		Name:{type:String,require:true},
 		DateOfBirth:String,
@@ -86,10 +87,9 @@ const mongoose = require('mongoose');
 		//PF ESI
 		PANnumber:String,
 		PFNumber:String,
-		PFJoinDate:String,
-		FamilyPFNo:String,
 		UANnumber:Number,
 		ESInumber:String,
+		LWF:Boolean,
 		// Payment
 		Salary:String,
 		BankName:String,
